@@ -76,22 +76,46 @@ fun_action <- function(){
         barplot(trans_select,  xlab = "action", ylab = "I/O Count", col=c("lightblue","lightgreen", "lightyellow"))
         legend("topleft", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("lightblue","lightgreen", "lightyellow"))
 }
+# Y-axis Option(-y)
+fun_y <- function(){
+        args <- commandArgs(trailingOnly = TRUE)
+        flag = FALSE
+        if(length(args) != 0){
+                for(i in 1:length(args)){
+                        if(args[i] == '-y'){
+                                flag = TRUE
+                                if(args[i+1] == 'c'){ # I/O Count
+                                        fun_rwbs1()
+					fun_rwbs2()
+                                }
+                                if(args[i+1] == 's'){ # I/O Size
+                                	fun_rwbs3()
+					fun_rwbs4()
+                                }
+                                if(args[i+1] == 'all'){
+                                	fun_rwbs1()
+					fun_rwbs2()
+					fun_rwbs3()
+					fun_rwbs4()
+                                }
+                        }
+                }
+        }
+        if(flag == FALSE){ # all is default
+                fun_rwbs1()
+		fun_rwbs2()
+		fun_rwbs3()
+		fun_rwbs4()
+        }
+}
 
 # main
 main <- function(){
 	fun_output()
-	fun_rwbs1()
-	fun_rwbs2()
-	fun_rwbs3()
-	fun_rwbs4()
-	#fun_action()
+	fun_y()
 	fun_output2()
-	fun_rwbs1()
-	fun_rwbs2()
-	fun_rwbs3()
-	fun_rwbs4()
+	fun_y()
 	garbage <- dev.off()
-	#fun_action()
 }
 main()
 

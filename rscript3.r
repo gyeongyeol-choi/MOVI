@@ -74,20 +74,45 @@ fun_rwbs4 <- function(){# File to rwbs, I/O Size(%)
         barplot(trans_select2,  xlab = "rwbs type", ylab = "I/O Size(%)", col=colors, ylim = yrange)
         legend("topleft", legend=rownames(trans_select2), pch=21, cex=0.9, pt.bg = colors)
 }
+# Y-axis Option(-y)
+fun_y <- function(){
+        args <- commandArgs(trailingOnly = TRUE)
+        flag = FALSE
+        if(length(args) != 0){
+                for(i in 1:length(args)){
+                        if(args[i] == '-y'){
+                                flag = TRUE
+                                if(args[i+1] == 'c'){ # I/O Count
+                                        fun_rwbs1()
+                                        fun_rwbs2()
+                                }
+                                if(args[i+1] == 's'){ # I/O Size
+                                        fun_rwbs3()
+                                        fun_rwbs4()
+                                }
+                                if(args[i+1] == 'all'){
+                                        fun_rwbs1()
+                                        fun_rwbs2()
+                                        fun_rwbs3()
+                                        fun_rwbs4()
+                                }
+                        }
+                }
+        }
+        if(flag == FALSE){ # all is default
+                fun_rwbs1()
+                fun_rwbs2()
+                fun_rwbs3()
+                fun_rwbs4()
+        }
+}
 
 # main
 main <- function(){
 	fun_output()
-	fun_rwbs1()
-	fun_rwbs2()
-	fun_rwbs3()
-	fun_rwbs4()
+	fun_y()
 	fun_output2()
-	fun_rwbs1()
-	fun_rwbs2()
-	fun_rwbs3()
-	fun_rwbs4()
+	fun_y()
 	garbage <- dev.off()
 }
 main()
-

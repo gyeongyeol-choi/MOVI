@@ -11,7 +11,8 @@ Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l 
 * graph_type : f(Cumulative Bar Plot-file_type)/ b(Cumulative Bar Plot-block_type)/ t(time_plot+simple bar plot)/ all
 * Read or Write : r(read)/ w(write)/ rw(both read and write) 1. time_plot(graph) only 2. rw is default
 * time : sec(start):sec(end) # default - whole of the <result.po> data
-* y-axis : s(sector size)/ n(sector number)/ all(default) # time_plot(graph) only(need f/b graph)
+* y-axis - t(time plot) : s(sector size)/ n(sector number)/ all(default) 
+	 - b(block type)/f(file type) : s(I/O Size)/ c(I/O Count)/ all(default)
 * legend : f(file_type)/ b(block_type) # time_plot(graph) only, not implemented.
 * output # 1. name and location of the graph 2. file extension together
 """ % (sys.argv[0]))
@@ -93,37 +94,34 @@ if sys.argv.count('-g') == 1:
 	ind = sys.argv.index('-g') + 1
 	if sys.argv[ind] == 'f':
 		exe = 'python test3.py'
-		#subprocess.call('python test4.py', shell = True)
+		# set the Y-axis Option
+		if sys.argv.count('-y') == 1:
+                        ind2 = sys.argv.index('-y') + 1
+                        if sys.argv[ind2] == 's' or sys.argv[ind2] == 'c' or sys.argv[ind2] == 'all':
+                                exe = exe + ' -y ' + sys.argv[ind2]
+                        else:
+                                print('Error!! : Invalid argvs(-y)....')
+				sys.exit()
 	elif sys.argv[ind] == 'b':
 		exe = 'python test.py'
-		#subprocess.call('python test.py', shell = True)
-	elif sys.argv[ind] == 't':
+		# set the Y-axis Option
 		if sys.argv.count('-y') == 1:
 			ind2 = sys.argv.index('-y') + 1
-			if sys.argv[ind2] == 's' or sys.argv[ind2] == 'n' or sys.argv[ind2] == 'all':
-				exe = 'Rscript rscript2.r -y '+ sys.argv[ind2]
-			else:
-				print('Error!! : Invalid argvs(-y)....')
-                                sys.exit()
-			#exe = 'Rscript '
-			"""
-			if sys.argv[ind2] == 's':
-				exe = exe + 'rscript2-size.r'
-				#subprocess.call('R CMD BATCH rscript2-size.r', shell = True)
-			elif sys.argv[ind2] == 'n':
-				exe = exe + ' -y n'
-				#exe = exe + 'rscript2-num.r'
-				#subprocess.call('R CMD BATCH rscript2-num.r', shell = True)
-			elif sys.argv[ind2] == 'all':
-				exe = exe + 'rscript2-all.r'
-				#subprocess.call('R CMD BATCH rscript2-all.r', shell = True)
+			if sys.argv[ind2] == 's' or sys.argv[ind2] == 'c' or sys.argv[ind2] == 'all':
+				exe = exe + ' -y ' + sys.argv[ind2]
 			else:
 				print('Error!! : Invalid argvs(-y)....')
 				sys.exit()
-			"""
-		else:
-			exe = 'Rscript rscript2.r'
-			#subprocess.call('R CMD BATCH rscript2-all.r', shell = True)
+	elif sys.argv[ind] == 't':
+		exe = 'Rscript rscript2.r'
+		# set the Y-axis Option
+		if sys.argv.count('-y') == 1:
+			ind2 = sys.argv.index('-y') + 1
+			if sys.argv[ind2] == 's' or sys.argv[ind2] == 'n' or sys.argv[ind2] == 'all':
+				exe = exe +' -y '+ sys.argv[ind2]
+			else:
+				print('Error!! : Invalid argvs(-y)....')
+                                sys.exit()
 	elif sys.argv[ind] == 'all':
 		exe1 = 'python test.py' # 'b(block)
 		exe2 = 'Rscript rscript2.r' # t(time)
@@ -151,7 +149,7 @@ if sys.argv.count('-o') == 1:
 		out = sys.argv[ind].split('.')
                 exe = exe +' -o '+ sys.argv[ind] +' ' + out[1] # out[1] : file_extension
 	
-subprocess.call('rm -rf save/*', shell = True)
+subprocess.call('rm -rf save/*', shell = True) # Delete the Previous Graph File.
 #print(exe)
 if flag2 == False: # b, f, t
 	subprocess.call(exe, shell = True)

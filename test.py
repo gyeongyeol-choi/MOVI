@@ -148,13 +148,22 @@ for i in lst2:
         f3.write(action.keys()[action.values().index(order)]+'\t'+str(i[0])+'\t'+str(i[1])+'\t'+str(i[2])+'\n')
         order += 1
 """
+
 exe = 'Rscript rscript.r'
-# Output file option
+# set the Output file option
 if sys.argv.count('-o') == 1:
         ind = sys.argv.index('-o') + 1
         out = sys.argv[ind].split('.')
         exe = exe +' -o '+ sys.argv[ind] +' ' + out[1] # out[1] : file_extension
 
+# set the Y-axis Option
+if sys.argv.count('-y') == 1:
+	ind2 = sys.argv.index('-y') + 1
+	if sys.argv[ind2] == 's' or sys.argv[ind2] == 'c' or sys.argv[ind2] == 'all':
+		exe = exe + ' -y ' + sys.argv[ind2]
+	else:
+		print('Error!! : Invalid argvs(-y)....')
+		sys.exit()
 # File Close
 f.close()
 f2.close()
