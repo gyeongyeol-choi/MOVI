@@ -1,60 +1,34 @@
 # rscript3.r(Cumulative Bar Plot-File type)
-# Output Option('-o')
+# Output Option(-o)
 fun_output <- function(){
 	flag = FALSE
 	args <- commandArgs(trailingOnly = TRUE)
-
-	# Graph Size Option('-s')
-	x_length = 7
-	y_length = 7
-	if(length(args) != 0){
-		for(i in 1:length(args)){
-			if(args[i] == '-s'){
-				x_length = as.double(args[i+1])
-				y_length = as.double(args[i+2])
-			}
-		}
-	}		
-
 	if(length(args) != 0){
         	for(i in 1:length(args)){
                 	if(args[i] == '-o'){
                         	flag = TRUE
 				dir = paste("save", args[i+1], sep="/")
                         	if(args[i+2] == 'pdf')
-                                	pdf(dir, width = x_length, height = y_length) # default width = 7, height = 7)
-                        	#if(args[i+2] == 'wmf')
-                                #	win.metafile(dir, width = x_length, height = y_length)
-				# res(resolution-Pixel per Inch) required for converting pixel to inch.
+                                	pdf(dir) # width = 9, height = 5)
+                        	if(args[i+2] == 'wmf')
+                                	win.metafile(dir)
                         	if(args[i+2] == 'png')
-                                	png(dir, width = x_length, height = y_length, units = "in", res = 200)
+                                	png(dir)
                         	if(args[i+2] == 'jpg')
-                                	jpeg(dir, width = x_length, height = y_length, units = "in", res = 200)
+                                	jpeg(dir)
                         	if(args[i+2] == 'bmp')
-                                	bmp(dir, width = x_length, height = y_length, units = "in", res = 200)
+                                	bmp(dir)
                         	if(args[i+2] == 'ps')
-                                	postscript(dir, width = x_length, height = y_length)
+                                	postscript(dir)
                 	}
         	}
 	}		
 	if(flag == FALSE){
-        	pdf('save/F-Rplots.pdf', width = x_length, height = y_length)
+        	pdf('save/F-Rplots.pdf')
 	}
 }
 fun_output2 <- function(){
-        # Graph Size Option('-s')
-	args <- commandArgs(trailingOnly = TRUE)
-        x_length = 7
-        y_length = 7
-        if(length(args) != 0){
-                for(i in 1:length(args)){
-                        if(args[i] == '-s'){
-                                x_length = as.double(args[i+1])
-                                y_length = as.double(args[i+2])
-                        }
-		}
-        }
-	jpeg('save/F-Rplot%03d.jpg', width = x_length, height = y_length, units="in", res=200)
+	jpeg('save/F-Rplot%03d.jpg')
 }
 fun_rwbs1 <- function(){ # File to rwbs, I/O Count
 	most <- read.table("file_rwbs1.dat")

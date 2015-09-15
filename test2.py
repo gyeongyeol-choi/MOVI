@@ -6,8 +6,8 @@ f = open("result.po", 'r')
 f2 = open("result3.po", 'w')
 
 def usage():
-	print("""
-Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l legend] [-o output]
+	print("""**********************************************************************************************************************
+Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l legend] [-o output] [-s size]
 * graph_type : f(Cumulative Bar Plot-file_type)/ b(Cumulative Bar Plot-block_type)/ t(time_plot+simple bar plot)/ all
 * Read or Write : r(read)/ w(write)/ rw(both read and write) 1. time_plot(graph) only 2. rw is default
 * time : sec(start):sec(end) # default - whole of the <result.po> data
@@ -15,7 +15,8 @@ Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l 
 	 - b(block type)/f(file type) : s(I/O Size)/ c(I/O Count)/ all(default)
 * legend : f(file_type)/ b(block_type) # time_plot(graph) only, not implemented.
 * output # 1. name and location of the graph 2. file extension together
-""" % (sys.argv[0]))
+* size : width:height # 1. To control the ratio, size of the Graph file 2. units : inch  3. default is 7:7
+**********************************************************************************************************************""" % (sys.argv[0]))
 
 def parse1(data, data2):
         order = 0
@@ -136,6 +137,19 @@ else: # all is default
         exe3 = 'python test3.py' # f(file)
         flag2 = True
 
+# set the Graph Size option
+if sys.argv.count('-s') == 1:
+	ind = sys.argv.index('-s') + 1
+	ratio = sys.argv[ind].split(':')
+	x_length = ratio[0] # unit : inch
+	y_length = ratio[1]
+	if flag2 == False:
+		exe = exe + ' -s ' + x_length + ' ' + y_length
+	else:
+		exe1 = exe1 + ' -s ' + x_length + ' ' + y_length
+		exe2 = exe2 + ' -s ' + x_length + ' ' + y_length
+		exe3 = exe3 + ' -s ' + x_length + ' ' + y_length
+
 # set the Output file option
 if sys.argv.count('-o') == 1:
         ind = sys.argv.index('-o') + 1
@@ -147,11 +161,16 @@ if sys.argv.count('-o') == 1:
 	#	subprocess.call('Rscript output.r -o '+sys.argv[ind]+' '+out[1], shell=True) # out[1] : file_extension
 	else:
 		out = sys.argv[ind].split('.')
-                exe = exe +' -o '+ sys.argv[ind] +' ' + out[1] # out[1] : file_extension
-	
+		if flag2 == False:
+                	exe = exe +' -o '+ sys.argv[ind] +' ' + out[1] # out[1] : file_extension
+		else:
+			exe1 = exe1 + ' -s ' + x_length + ' ' + y_length
+	                exe2 = exe2 + ' -s ' + x_length + ' ' + y_length
+	                exe3 = exe3 + ' -s ' + x_length + ' ' + y_length
+
 subprocess.call('rm -rf save/*', shell = True) # Delete the Previous Graph File.
 #print(exe)
-if flag2 == False: # b, f, t
+if flag2 == False: # b(block), f(file), t(time)
 	subprocess.call(exe, shell = True)
 else: # all
 	subprocess.call(exe1, shell = True)

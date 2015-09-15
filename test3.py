@@ -158,6 +158,14 @@ print(file_num)
 """
 
 exe = 'Rscript rscript3.r'
+
+# set the Graph Size Option
+if sys.argv.count('-s') == 1:
+        ind = sys.argv.index('-s') + 1
+        x_length = sys.argv[ind] # unit : inch
+        y_length = sys.argv[ind+1]
+        exe = exe + ' -s ' + x_length + ' ' + y_length
+
 # set the Output file option
 if sys.argv.count('-o') == 1:
         ind = sys.argv.index('-o') + 1
