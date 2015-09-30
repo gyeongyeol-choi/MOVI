@@ -1,19 +1,22 @@
 # test2.py
 import subprocess
 import sys # args
+import time # Time function
 
-f = open("result.po", 'r')
-f2 = open("result3.po", 'w')
+#f = open("result.po", 'r')
+#f2 = open("result3.po", 'w')
 
 def usage():
 	print("""**********************************************************************************************************************
-Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l legend] [-o output] [-s size]
+Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l legend] [-i input] [-o output] [-s size]
 * graph_type : f(Cumulative Bar Plot-file_type)/ b(Cumulative Bar Plot-block_type)/ t(time_plot+simple bar plot)/ all
 * Read or Write : r(read)/ w(write)/ rw(both read and write) 1. time_plot(graph) only 2. rw is default
 * time : sec(start):sec(end) # default - whole of the <result.po> data
 * y-axis - t(time plot) : s(sector size)/ n(sector number)/ all(default) 
 	 - b(block type)/f(file type) : s(I/O Size)/ c(I/O Count)/ all(default)
 * legend : f(file_type)/ b(block_type) # time_plot(graph) only, not implemented.
+* input : # 1. name of the MOST output file(*.po), 2. default : result.po
+	    3. also setted as directory names : <name>-<time> ex> result.po-Wed,Sep,30,16:08:04,2015
 * output # 1. name and location of the graph 2. file extension together
 * size : width:height # 1. To control the ratio, size of the Graph file 2. units : inch  3. default is 7:7
 **********************************************************************************************************************""" % (sys.argv[0]))
@@ -33,6 +36,15 @@ def parse1(data, data2):
 if sys.argv.count('-h') == 1:
 	usage()
 	sys.exit()
+
+# set the input option(1)
+if sys.argv.count('-i') == 1:
+	ind = sys.argv.index('-i') + 1
+	name = sys.argv[ind]
+	f = open(name, 'r')
+else:
+	f = open("result.po", 'r')
+f2 = open("result3.po", 'w')
 
 # set the time option
 if sys.argv.count('-t') == 1:
@@ -164,11 +176,26 @@ if sys.argv.count('-o') == 1:
 		if flag2 == False:
                 	exe = exe +' -o '+ sys.argv[ind] +' ' + out[1] # out[1] : file_extension
 		else:
-			exe1 = exe1 + ' -s ' + x_length + ' ' + y_length
-	                exe2 = exe2 + ' -s ' + x_length + ' ' + y_length
-	                exe3 = exe3 + ' -s ' + x_length + ' ' + y_length
+			exe1 = exe1 + ' -o ' + x_length + ' ' + y_length
+	                exe2 = exe2 + ' -o ' + x_length + ' ' + y_length
+	                exe3 = exe3 + ' -o ' + x_length + ' ' + y_length
 
-subprocess.call('rm -rf save/*', shell = True) # Delete the Previous Graph File.
+# set the input option(2)
+if sys.argv.count('-i') == 1:
+        ind = sys.argv.index('-i') + 1
+        name = sys.argv[ind]
+	time = time.ctime().replace(" ", ",")
+	if flag2 == False:
+		exe = exe + ' -i ' + name + ' ' + time
+	else:
+		exe1 = exe1 + ' -i ' + name + ' ' + time
+		exe2 = exe2 + ' -i ' + name + ' ' + time
+		exe3 = exe3 + ' -i ' + name + ' ' + time
+	subprocess.call('mkdir '+ name + '-' + time, shell = True)
+else:
+        subprocess.call('rm -rf save/*', shell = True) # Delete the Previous Graph File.
+
+#subprocess.call('rm -rf save/*', shell = True) # Delete the Previous Graph File.
 #print(exe)
 if flag2 == False: # b(block), f(file), t(time)
 	subprocess.call(exe, shell = True)

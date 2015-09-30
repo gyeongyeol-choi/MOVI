@@ -31,7 +31,7 @@ while 1:
 	file_num[data[0]] = size
 	size += 1
 file_num['ETC_FILE'] = size
-print(file_type)
+#print(file_type)
 
 # General IO => File type
 while 1:
@@ -55,7 +55,7 @@ while 1:
 	for i in file_type.keys():
 		if i.find('$') != -1:
 			tmp2 = i.split('$')
-			print(tmp2)
+			#print(tmp2)
 			ext = tmp2[0]
 			num = int(tmp2[1])
 			index = data[8].find(ext)
@@ -181,6 +181,14 @@ if sys.argv.count('-y') == 1:
         else:
                 print('Error!! : Invalid argvs(-y)....')
                 sys.exit()
+
+# set the input option
+if sys.argv.count('-i') == 1:
+        ind = sys.argv.index('-i') + 1
+        name = sys.argv[ind]
+        time = sys.argv[ind+1]
+        exe = exe + ' -i '+ name + ' ' + time
+
 # File Close
 f.close()
 f2.close()
@@ -189,6 +197,6 @@ f4.close()
 f5.close()
 f6.close()
 
-print(exe)
+#print(exe)
 # Execute the R script.
 subprocess.call(exe, shell=True)

@@ -50,7 +50,7 @@ while 1:
 		tmp = "W"
 	elif data[2] == "N":
 		tmp = "N"
-	print(tmp+':'+str(rwbs[tmp]))
+	#print(tmp+':'+str(rwbs[tmp]))
 
 	if data[7] == "D":
 		lst[rwbs[tmp]][0] += 1 # I/O Count
@@ -171,6 +171,14 @@ if sys.argv.count('-y') == 1:
 	else:
 		print('Error!! : Invalid argvs(-y)....')
 		sys.exit()
+
+# set the input option
+if sys.argv.count('-i') == 1:
+        ind = sys.argv.index('-i') + 1
+        name = sys.argv[ind]
+	time = sys.argv[ind+1]
+	exe = exe + ' -i '+ name + ' ' + time
+
 # File Close
 f.close()
 f2.close()
@@ -178,6 +186,6 @@ f3.close()
 f4.close()
 f5.close()
 
-print(exe)
+#print(exe)
 # Execute the R script.
 subprocess.call(exe, shell=True)

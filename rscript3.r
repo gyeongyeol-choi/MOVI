@@ -2,6 +2,7 @@
 # Output Option('-o')
 fun_output <- function(){
 	flag = FALSE
+	flag2 = FALSE
 	args <- commandArgs(trailingOnly = TRUE)
 
 	# Graph Size Option('-s')
@@ -14,17 +15,29 @@ fun_output <- function(){
 				y_length = as.double(args[i+2])
 			}
 		}
-	}		
+	}
+	# Input Option('-i') - Directory		
+	if(length(args) != 0){
+                for(i in 1:length(args)){
+                        if(args[i] == '-i'){
+                                flag2 = TRUE
+                                name = args[i+1]
+                                time = args[i+2]
+                                dir = paste(name, time, sep="-")
+                        }
+                }
+        }
 
 	if(length(args) != 0){
         	for(i in 1:length(args)){
                 	if(args[i] == '-o'){
                         	flag = TRUE
-				dir = paste("save", args[i+1], sep="/")
+				if(flag2 == TRUE)
+                                        dir = paste(dir, args[i+1], sep="/")
+                                else
+                                        dir = paste("save", args[i+1], sep="/")
                         	if(args[i+2] == 'pdf')
                                 	pdf(dir, width = x_length, height = y_length) # default width = 7, height = 7)
-                        	#if(args[i+2] == 'wmf')
-                                #	win.metafile(dir, width = x_length, height = y_length)
 				# res(resolution-Pixel per Inch) required for converting pixel to inch.
                         	if(args[i+2] == 'png')
                                 	png(dir, width = x_length, height = y_length, units = "in", res = 200)
@@ -36,14 +49,31 @@ fun_output <- function(){
                                 	postscript(dir, width = x_length, height = y_length)
                 	}
         	}
-	}		
-	if(flag == FALSE){
-        	pdf('save/F-Rplots.pdf', width = x_length, height = y_length)
 	}
+	if(flag == FALSE){
+                if(flag2 == TRUE){
+                        dir = paste(dir, "F-Rplots.pdf", sep="/")
+                        pdf(dir, width = x_length, height = y_length)
+                }
+                else
+                        pdf('save/F-Rplots.pdf', width = x_length, height = y_length)
+        }
 }
 fun_output2 <- function(){
-        # Graph Size Option('-s')
 	args <- commandArgs(trailingOnly = TRUE)
+        flag2 = FALSE
+	# Input Option('-i')
+        if(length(args) != 0){
+                for(i in 1:length(args)){
+                        if(args[i] == '-i'){
+                                flag2 = TRUE
+                                name = args[i+1]
+                                time = args[i+2]
+                                dir = paste(name, time, sep="-")
+                        }
+                }
+        }
+        # Graph Size Option('-s')
         x_length = 7
         y_length = 7
         if(length(args) != 0){
@@ -54,7 +84,12 @@ fun_output2 <- function(){
                         }
 		}
         }
-	jpeg('save/F-Rplot%03d.jpg', width = x_length, height = y_length, units="in", res=200)
+	if(flag2 == TRUE){
+                dir = paste(dir, "F-Rplot%03d.jpg", sep="/")
+                jpeg(dir, width = x_length, height = y_length, units="in", res=200)
+        }
+        else
+                jpeg('save/F-Rplot%03d.jpg', width = x_length, height = y_length, units="in", res=200)
 }
 fun_rwbs1 <- function(){ # File to rwbs, I/O Count
 	most <- read.table("file_rwbs1.dat")
