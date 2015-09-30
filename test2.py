@@ -178,4 +178,3 @@ else: # all
 	subprocess.call(exe3, shell = True)
 
 #subprocess.call('R CMD BATCH rscript2.r', shell=True)
-

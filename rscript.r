@@ -38,7 +38,7 @@ fun_output <- function(){
         	}
 	}		
 	if(flag == FALSE){
-        	pdf('save/B-Rplots.pdf', width = x_length, height = y_length)
+        	pdf('save/B-Rplots.pdf', width = x_length, height = y_length, family = "mono")
 	}
 }
 fun_output2 <- function(){
