@@ -71,7 +71,7 @@ while 1:
 	if not cur_type == 'NONE_FILE':
 		#lst[action[data[1]]][file_num[cur_type]] += 1
 		lst[rwbs[tmp]][file_num[cur_type]] += 1
-		lst2[rwbs[tmp]][file_num[cur_type]] += int(data[4])/2 # data[4] : I/O Size(512KB->1024KB)
+		lst2[rwbs[tmp]][file_num[cur_type]] += int(data[4])/2 # data[4] : I/O Size(512byte->1KB)
 
 # Write the Parsing Data - I/O Count
 # Columns
@@ -109,7 +109,7 @@ for i in lst:
 			f4.write('\t'+str(i[index]))
         f4.write('\n')
         order += 1
-# Write the Parsing Data - I/O Size(1024KB)
+# Write the Parsing Data - I/O Size(1KB)
 # Columns
 order = 0
 for i in range(0, size+1):
@@ -137,7 +137,7 @@ f6.write('\n')
 order = 0
 for i in lst2:
         rowSums = sum(i, 0.0)
-        f6.write(rwbs.keys()[rwbs.values().index(order)]+":"+str(int(rowSums))+"MB") # 1024KB = 1MB
+        f6.write(rwbs.keys()[rwbs.values().index(order)]+":"+str(int(rowSums))+"KB") # 1024byte = 1KB
         for index in range(0, size+1):
                 if not rowSums == 0:
                         f6.write('\t'+str((i[index])*100/rowSums))

@@ -8,7 +8,7 @@ import time # Time function
 
 def usage():
 	print("""**********************************************************************************************************************
-Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l legend] [-i input] [-o output] [-s size]
+Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l legend] [-i input] [-o output] [-s size] [-p point]
 * graph_type : f(Cumulative Bar Plot-file_type)/ b(Cumulative Bar Plot-block_type)/ t(time_plot+simple bar plot)/ all
 * Read or Write : r(read)/ w(write)/ rw(both read and write) 1. time_plot(graph) only 2. rw is default
 * time : sec(start):sec(end) # default - whole of the <result.po> data
@@ -19,6 +19,7 @@ Usage : python %s [-g graph_type] [-rw Read or Write] [-t time] [-y y-axis] [-l 
 	    3. also setted as directory names : <name>-<time> ex> result.po-Wed,Sep,30,16:08:04,2015
 * output # 1. name and location of the graph 2. file extension together
 * size : width:height # 1. To control the ratio, size of the Graph file 2. units : inch  3. default is 7:7
+* point : c(color)/ s(shape) # 1. time_plot(graph) only, 2. color is default
 **********************************************************************************************************************""" % (sys.argv[0]))
 
 def parse1(data, data2):
@@ -81,7 +82,7 @@ while 1:
 	tmp = ''
 	if flag :
 		if float(data[0]) > start and float(data[0]) < end:
-			if data[1] == 'C':
+			if data[1] == 'C' :
 				tmp = data[0]+'\t'+data[1]+'\t'+data[2]+'\t'+data[3]+'\t'+data[4]+'\t'+data[5]+'\t'+data[6]+'\t'+data[7]+'\t'+data[8]+'\n'
 				#f2.write(data[0]+'\t'+data[1]+'\t'+data[2]+'\t'+data[3]+'\t'+data[4]+'\t'+data[5]+'\t'+data[6]+'\t'+data[7]+'\t'+data[8]+'\n')
 		elif float(data[0]) > end:
@@ -179,12 +180,21 @@ if sys.argv.count('-o') == 1:
 			exe1 = exe1 + ' -o ' + x_length + ' ' + y_length
 	                exe2 = exe2 + ' -o ' + x_length + ' ' + y_length
 	                exe3 = exe3 + ' -o ' + x_length + ' ' + y_length
+# set the Point Option
+if sys.argv.count('-p') == 1:
+	ind = sys.argv.index('-p') + 1
+	point = sys.argv[ind]
+	if flag2 == False:
+		exe = exe+' -p ' + point
+	else:
+		exe2 = exe2 + ' -p ' + point
 
 # set the input option(2)
 if sys.argv.count('-i') == 1:
         ind = sys.argv.index('-i') + 1
         name = sys.argv[ind]
-	time = time.ctime().replace(" ", ",")
+	#time = time.ctime().replace(" ", ",")
+	time = time.strftime('%X', time.localtime(time.time())).replace(":", ".")
 	if flag2 == False:
 		exe = exe + ' -i ' + name + ' ' + time
 	else:

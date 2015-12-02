@@ -56,6 +56,7 @@ fun_output <- function(){
 		}
 		else
         		pdf('save/T-Rplots.pdf', width = x_length, height = y_length)
+			#pdf('save/T-Rplots.pdf', width = x_length, height = y_length, family = "GB1")
 	}
 }
 fun_output2 <- function(){
@@ -100,29 +101,67 @@ fun_output2 <- function(){
 fun_num <- function(most,...){
 	plot(sec_num~time, data=most, xlab = "time(sec)")
 	xrange<-c(min(most$time),max(most$time))
-	#xrange<-c(0, 7)
 	yrange<-c(min(most$sec_num), max(most$sec_num))
-	#yrange<-c(0, 2.5e+7)
-	plot(sec_num~time, data=most[most$block == "D",], col="blue", xlim=xrange, ylim=yrange, xlab = "time(sec)")
-	par(new = T)
-	plot(sec_num~time, data=most[most$block == "J",], col="red", xlim=xrange, ylim=yrange, xlab = "time(sec)")
-	par(new = T)
-	plot(sec_num~time, data=most[most$block == "M",], col="black", xlim=xrange, ylim=yrange, xlab = "time(sec)")
-	legend("right", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("blue", "red", "black"))
+	# Point Option('-p')
+        flag = FALSE
+        args <- commandArgs(trailingOnly = TRUE)
+        if(length(args) != 0){
+                for(i in 1:length(args)){
+                        if(args[i] == '-p'){
+                                if(args[i+1] == 's')
+                                        flag = TRUE
+                        }
+                }
+        }
+	if(flag == FALSE){
+		plot(sec_num~time, data=most[most$block == "D",], col="blue", xlim=xrange, ylim=yrange, xlab = "time(sec)")
+		par(new = T)
+		plot(sec_num~time, data=most[most$block == "J",], col="red", xlim=xrange, ylim=yrange, xlab = "time(sec)")
+		par(new = T)
+		plot(sec_num~time, data=most[most$block == "M",], col="black", xlim=xrange, ylim=yrange, xlab = "time(sec)")
+		legend("right", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("blue", "red", "black"))
+	}
+	else{
+		plot(sec_num~time, data=most[most$block == "D",], pch = 1, xlim=xrange, ylim=yrange, xlab = "time(sec)")
+                par(new = T)
+                plot(sec_num~time, data=most[most$block == "J",], pch = 2, xlim=xrange, ylim=yrange, xlab = "time(sec)")
+                par(new = T)
+                plot(sec_num~time, data=most[most$block == "M",], pch = 3, xlim=xrange, ylim=yrange, xlab = "time(sec)")
+                legend("right", legend=c("Data", "Journal", "Meta"), pch=c(1, 2, 3))
+	}
 }
 # Function for Sector Size Graph
-fun_size <- function(most,...){ #512KB -> 1024KB
-	plot(sec_size/2~time, data=most, xlab = "time(sec)", ylab = "sec_size(1024KB)")
+fun_size <- function(most,...){ #512byte -> 1KB
+	plot(sec_size/2~time, data=most, xlab = "time(sec)", ylab = "sec_size(1KB)")
 	xrange<-c(min(most$time),max(most$time))
-	#xrange<-c(0, 7)
 	yrange<-c(min(most$sec_size), max(most$sec_size/2))
-	#yrange<-c(0, 150)
-	plot(sec_size/2~time, data=most[most$block == "D",], col="blue", xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1024KB)")
-	par(new = T)
-	plot(sec_size/2~time, data=most[most$block == "J",], col="red", xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1024KB)")
-	par(new = T)
-	plot(sec_size/2~time, data=most[most$block == "M",], col="black", xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1024KB)")
-	legend("topright", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("blue", "red", "black"))
+	# Point Option('-p')
+        flag = FALSE
+        args <- commandArgs(trailingOnly = TRUE)
+        if(length(args) != 0){
+                for(i in 1:length(args)){
+                        if(args[i] == '-p'){
+                                if(args[i+1] == 's')
+                                        flag = TRUE
+                        }
+                }
+        }
+	if(flag == FALSE){
+		plot(sec_size/2~time, data=most[most$block == "D",], col="blue", xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1KB)")
+		par(new = T)
+		plot(sec_size/2~time, data=most[most$block == "J",], col="red", xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1KB)")
+		par(new = T)
+		plot(sec_size/2~time, data=most[most$block == "M",], col="black", xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1KB)")
+		legend("topright", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("blue", "red", "black"))
+	}
+	else{
+		plot(sec_size/2~time, data=most[most$block == "D",], pch=1, xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1KB)")
+                par(new = T)
+                plot(sec_size/2~time, data=most[most$block == "J",], pch=2, xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1KB)")
+                par(new = T)
+                plot(sec_size/2~time, data=most[most$block == "M",], pch=3, xlim=xrange, ylim=yrange, xlab = "time(sec)", ylab = "sec_size(1KB)")
+                legend("topright", legend=c("Data", "Journal", "Meta"), pch=c(1, 2, 3))
+	}
 }
 # Y-axis Option(-y)
 fun_y <- function(){
@@ -153,11 +192,12 @@ fun_y <- function(){
 		fun_size(most)
 		fun_num(most)
 		# Bar plot for sector number
-		yrange_RW<-c(0,max(table(most$RW))*1.25)
+		yrange_RW<-c(0,max(table(most$RW))*1.35)
 		barplot(table(most$RW), xlab = "rwbs type", ylab = "I/O Count", ylim = yrange_RW)
-		# Bar plot for sector size(512KB -> 1024KB)
-		yrange_SS<-c(0,max(table(most$sec_size/2))*1.25)
-		barplot(table(most$sec_size/2), xlab = "sec_size(1024KB)", ylab = "I/O Count", ylim = yrange_SS)
+		# Bar plot for sector size(512byte -> 1KB)
+		yrange_SS<-c(0,max(table(most$sec_size/2))*1.35)
+		barplot(table(most$sec_size/2), xlab = "sec_size(1KB)", ylab = "I/O Count", ylim = yrange_SS)
+		hist(t(most$sec_size/2), main = "Histogram(Distribution of Sector Size)", xlab = "sec_size(1KB)", ylab = "I/O Count", breaks = seq(min(most$sec_size/2), max(most$sec_size/2), by=4))
 		#plot(sec_num~time, data=most)
         	#plot(sec_size~time, data=most)
 	}

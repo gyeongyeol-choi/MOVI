@@ -54,7 +54,7 @@ while 1:
 
 	if data[7] == "D":
 		lst[rwbs[tmp]][0] += 1 # I/O Count
-		lst3[rwbs[tmp]][0] += int(data[4])/2 # data[4] : I/O Size(512KB)
+		lst3[rwbs[tmp]][0] += int(data[4])/2 # data[4] : I/O Size(512byte)
 	elif data[7] == "J":
 		lst[rwbs[tmp]][1] += 1
 		lst3[rwbs[tmp]][1] += int(data[4])/2
@@ -137,9 +137,9 @@ f5.write("\tD\tJ\tM\n")
 for i in lst3:
         rowSums = sum(i, 0.0)
         if not rowSums == 0:
-                f5.write(rwbs.keys()[rwbs.values().index(order)]+":"+str(int(rowSums))+"MB"+'\t'+str(i[0]*100/rowSums)+'\t'+str(i[1]*100/rowSums)+'\t'+str(i[2]*100/rowSums)+'\n')
+                f5.write(rwbs.keys()[rwbs.values().index(order)]+":"+str(int(rowSums))+"KB"+'\t'+str(i[0]*100/rowSums)+'\t'+str(i[1]*100/rowSums)+'\t'+str(i[2]*100/rowSums)+'\n')
         else :
-                f5.write(rwbs.keys()[rwbs.values().index(order)]+":"+str(int(rowSums))+"MB"+'\t'+str(i[0])+'\t'+str(i[1])+'\t'+str(i[2])+'\n')
+                f5.write(rwbs.keys()[rwbs.values().index(order)]+":"+str(int(rowSums))+"KB"+'\t'+str(i[0])+'\t'+str(i[1])+'\t'+str(i[2])+'\n')
         order += 1
 """
 order = 0

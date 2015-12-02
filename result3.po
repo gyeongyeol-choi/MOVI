@@ -179,26 +179,3 @@
     2.970362708	C	WAS	 4082288	  96	 137	     jbd2/mmcblk0p28	J	file-NONE
     2.972031406	C	WS	 4082384	   8	 137	     jbd2/mmcblk0p28	J	file-NONE
     2.972151041	C	WS	 4082384	   0	 137	     jbd2/mmcblk0p28	J	file-NONE
-    4.319012499	C	WAS	22921568	   8	3051	     .android.chrome	D	/data/com.android.chrome/app_chrome/Default/Local Storage/http_m.news.naver.com_0.localstorage-journal
-    4.319818176	C	WS	       0	   0	 135	         flush-179:0	M	file-NONE
-    4.327496406	C	WAS	 4082392	 120	 137	     jbd2/mmcblk0p28	J	file-NONE
-    4.328904478	C	WS	 4082512	   8	 137	     jbd2/mmcblk0p28	J	file-NONE
-    4.329127864	C	WS	 4082512	   0	 137	     jbd2/mmcblk0p28	J	file-NONE
-    4.330792135	C	WAS	22921568	   8	3051	     .android.chrome	D	/data/com.android.chrome/app_chrome/Default/Local Storage/http_m.news.naver.com_0.localstorage-journal
-    4.331249947	C	WS	       0	   0	 135	         flush-179:0	M	file-NONE
-    4.332483749	C	WAS	22921576	   8	3051	     .android.chrome	D	/data/com.android.chrome/app_chrome/Default/Local Storage/http_m.news.naver.com_0.localstorage
-    4.333153749	C	WS	       0	   0	 135	         flush-179:0	M	file-NONE
-    4.335009427	C	WAS	22921568	   8	3051	     .android.chrome	D	/data/com.android.chrome/app_chrome/Default/Local Storage/http_m.news.naver.com_0.localstorage-journal
-    4.335733593	C	WS	       0	   0	 135	         flush-179:0	M	file-NONE
-    4.556897968	C	RA	 5129152	  32	3041	     .android.chrome	D	/data/com.android.chrome/cache/Cache/data_1
-    4.575539791	C	WAS	22968520	   8	3070	        AsyncTask 4	M	file-NONE
-    4.584003697	C	WAS	 4082520	 120	 137	     jbd2/mmcblk0p28	J	file-NONE
-    4.585571510	C	WS	 4082640	   8	 137	     jbd2/mmcblk0p28	J	file-NONE
-    4.585712760	C	WS	 4082640	   0	 137	     jbd2/mmcblk0p28	J	file-NONE
-    4.794966614	C	RA	 4800416	   8	3041	     .android.chrome	D	/data/com.android.chrome/cache/Cache/data_1
-    4.913509686	C	RA	 4800432	   8	3041	     .android.chrome	D	/data/com.android.chrome/cache/Cache/data_1
-    4.928383749	C	RA	 4800440	   8	3041	     .android.chrome	D	/data/com.android.chrome/cache/Cache/data_1
-    7.130357966	C	WA	 6598384	   8	 135	         flush-179:0	D	/data/com.android.chrome/files/android_ticl_service_state.bin
-    7.137323852	C	WA	 4799752	   8	 135	         flush-179:0	D	/data/com.android.chrome/cache/Cache/data_1
-    7.138086924	C	WA	 4800208	  16	 135	         flush-179:0	D	/data/com.android.chrome/cache/Cache/data_1
-    7.152101611	C	WA	 4800240	  24	 135	         flush-179:0	D	/data/com.android.chrome/cache/Cache/data_1

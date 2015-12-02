@@ -98,7 +98,10 @@ fun_rwbs1 <- function(){ # block to rwbs, I/O Count
 	most_matrix <- data.matrix(most)
 	trans <- t(most_matrix)
 	trans_select <- trans[, !colSums(trans)==0]
-	yrange<-c(0,max(colSums(trans_select))*1.25)
+	if(!is.null(ncol(trans_select)))
+		yrange<-c(0,max(colSums(trans_select))*1.35)
+	else
+		yrange<-c(0,max(trans_select)*1.35)
 	barplot(trans_select,  xlab = "rwbs type", ylab = "I/O Count", col=c("lightblue","lightgreen", "lightyellow"), ylim = yrange)
 	legend("topleft", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("lightblue","lightgreen", "lightyellow"))
 }
@@ -107,17 +110,23 @@ fun_rwbs2 <- function(){ # block to rwbs, I/O Count(%)
         most_matrix <- data.matrix(most)
         trans <- t(most_matrix)
         trans_select <- trans[, !colSums(trans)==0]
-        yrange<-c(0,max(colSums(trans_select))*1.25)
+        if(!is.null(ncol(trans_select)))
+                yrange<-c(0,max(colSums(trans_select))*1.35)
+        else
+                yrange<-c(0,max(trans_select)*1.35)
         barplot(trans_select,  xlab = "rwbs type", ylab = "I/O Count(%)", col=c("lightblue","lightgreen", "lightyellow"), ylim = yrange)
         legend("topleft", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("lightblue","lightgreen", "lightyellow"))
 }
-fun_rwbs3 <- function(){ # block to rwbs, I/O Size(1024KB)
+fun_rwbs3 <- function(){ # block to rwbs, I/O Size(1KB)
         most <- read.table("block_rwbs3.dat")
         most_matrix <- data.matrix(most)
         trans <- t(most_matrix)
         trans_select <- trans[, !colSums(trans)==0]
-        yrange <- c(0,max(colSums(trans_select))*1.25)
-        barplot(trans_select,  xlab = "rwbs type", ylab = "I/O Size(1024KB)", col=c("lightblue","lightgreen", "lightyellow"), ylim = yrange)
+        if(!is.null(ncol(trans_select)))
+                yrange<-c(0,max(colSums(trans_select))*1.35)
+        else
+                yrange<-c(0,max(trans_select)*1.35)
+        barplot(trans_select,  xlab = "rwbs type", ylab = "I/O Size(1KB)", col=c("lightblue","lightgreen", "lightyellow"), ylim = yrange)
         legend("topleft", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("lightblue","lightgreen", "lightyellow"))
 }
 fun_rwbs4 <- function(){ # block to rwbs, I/O Size(%)
@@ -125,7 +134,10 @@ fun_rwbs4 <- function(){ # block to rwbs, I/O Size(%)
         most_matrix <- data.matrix(most)
         trans <- t(most_matrix)
         trans_select <- trans[, !colSums(trans)==0]
-        yrange<-c(0,max(colSums(trans_select))*1.25)
+        if(!is.null(ncol(trans_select)))
+                yrange<-c(0,max(colSums(trans_select))*1.35)
+        else
+                yrange<-c(0,max(trans_select)*1.35)
         barplot(trans_select,  xlab = "rwbs type", ylab = "I/O Size(%)", col=c("lightblue","lightgreen", "lightyellow"), ylim = yrange)
         legend("topleft", legend=c("Data", "Journal", "Meta"), pch=21, pt.bg=c("lightblue","lightgreen", "lightyellow"))
 }
